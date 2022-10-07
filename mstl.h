@@ -8,6 +8,7 @@ private:
     int number_of_elements;
     T* main_buffer;
 
+protected:
     void expand_twice_the_size(){
         T* helper_buffer = copy_array(main_buffer, current_size,false);
         delete [] main_buffer;
@@ -116,5 +117,39 @@ public:
         return number_of_elements;
     }
 };
+
+class Mstring : public Mvector<char>{
+private:
+
+    char* main_buffer;
+    int current_size;
+    int length_of_mstring;
+
+public:
+
+    Mstring(){
+        current_size = 11;
+        length_of_mstring = 0;
+    }
+
+//    Mstring(char user_mstring[]){
+//        current_size = 11;
+//        length_of_mstring = 0;
+//
+//
+//    }
+
+    ~Mstring(){
+        delete [] main_buffer;
+    }
+
+    Mstring& add_ms(char user_char[]){
+
+
+
+        return *this;
+    }
+};
+
 }
 #endif //MY_LIBRARY_MSTL_H
