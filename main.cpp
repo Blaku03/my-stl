@@ -1,26 +1,20 @@
 #include <iostream>
+#include "mstl.h"
 
-template <typename T>
-class Mvector{
-private:
-    int current_size;
-    int number_of_elements;
-    T* main_buffer;
-    
-public:
-    Mvector(){
-        current_size = 10;
-        main_buffer = new T[current_size];
-        number_of_elements = 0;
-    }
-
-    ~Mvector(){
-        delete main_buffer;
-    }
-};
-
+using namespace mstl;
 
 int main() {
-    Mvector<int> test;
+    Mvector<int> my_vector;
+    Mvector<int> test_vector;
+
+    my_vector.push(1).push(2).push(3);
+    test_vector.push(8).push(9);
+
+    my_vector.push_mvector(test_vector);
+
+     for(int i = 0; i < my_vector.size(); i++){
+         std::cout<<my_vector.i_element(i);
+     }
+
     return 0;
 }
