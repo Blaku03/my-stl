@@ -3,12 +3,11 @@
 namespace mstl{
 template <typename T>
 class Mvector{
-private:
+protected:
     int current_size;
     int number_of_elements;
     T* main_buffer;
 
-protected:
     void expand_twice_the_size(){
         T* helper_buffer = copy_array(main_buffer, current_size,false);
         delete [] main_buffer;
@@ -18,7 +17,6 @@ protected:
         current_size *=2;
 
         delete [] helper_buffer;
-
     }
 
     T* copy_array(T* pointer_to_array_that_should_be_copied, int size_of_array, bool double_size){
@@ -58,7 +56,7 @@ public:
         return *this;
     }
 
-    Mvector& push_arr(T user_arr[], int size_of_user_arr){
+    Mvector& push(T user_arr[], int size_of_user_arr){
         //Make sure that main buffer have the proper size
         while(!enough_buffer_space(size_of_user_arr)) expand_twice_the_size();
 
@@ -71,7 +69,7 @@ public:
         return *this;
     }
 
-    Mvector& push_mvector(Mvector& user_vector){
+    Mvector& push(Mvector& user_vector){
 
         //Add it to variable to not call method all the time
          int user_vector_size = user_vector.size();
@@ -96,7 +94,7 @@ public:
         if (current_size == number_of_elements) return;
 
         //Just copy the array but size of the copied array will be number of elements instead of current size
-        T *helper_buffer = copy_array(main_buffer, number_of_elements, false);
+        T* helper_buffer = copy_array(main_buffer, number_of_elements, false);
         delete [] main_buffer;
 
         main_buffer = helper_buffer;
@@ -119,37 +117,33 @@ public:
 };
 
 class Mstring : public Mvector<char>{
-private:
-
-    char* main_buffer;
-    int current_size;
-    int length_of_mstring;
-
 public:
+    using Mvector::Mvector;
 
-    Mstring(){
-        current_size = 11;
-        length_of_mstring = 0;
+    Mstring(char user_mstring[]) : Mvector<char>(){
+        add_ms(user_mstring);
     }
 
-//    Mstring(char user_mstring[]){
-//        current_size = 11;
-//        length_of_mstring = 0;
-//
-//
-//    }
+    Mstring& add_ms(const char user_char[]){
+        int element = 0;
 
-    ~Mstring(){
-        delete [] main_buffer;
-    }
-
-    Mstring& add_ms(char user_char[]){
-
-
+        while(user_char[element] != '\0'){
+            if(number_of_elements == current_size) expand_twice_the_size();
+            *(main_buffer + element) = user_char[element];
+            element++;
+            number_of_elements++;
+        }
 
         return *this;
     }
-};
 
+    void print(){
+
+        for(int i = 0; i < number_of_elements; i++){
+            std::cout<<(char)*(main_buffer + i);
+        }
+
+    }
+};
 }
 #endif //MY_LIBRARY_MSTL_H
