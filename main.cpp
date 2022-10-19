@@ -3,4 +3,5 @@
 
 using namespace mstl;
 
-int main() {}
+int main() {
+}
