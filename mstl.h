@@ -54,6 +54,7 @@ namespace mstl {
         Mstring& operator=(char user_char[]);
         Mstring& operator+(char user_char[]);
         Mstring& operator+(Mstring& user_mstring);
-
+        Mstring& operator+=(Mstring& user_mstring);
+        Mstring& operator+=(char user_char[]);
     };
 }

@@ -5,10 +5,10 @@ using namespace mstl;
 
 int main()
 {
-    Mstring test("Hello");
-    Mstring test2;
-    test2 = "World";
-    test = test + " " + test2;
+    Mstring test;
+    std::cin >> test;
+    test += " ";
+    std::cin>>test;
     std::cout << test << std::endl;
 
     return 0;

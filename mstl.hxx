@@ -176,6 +176,18 @@ Mstring& Mstring::operator+(Mstring& user_mstring){
     return *new_mstring;
 }
 
+Mstring& Mstring::operator+=(char user_char[]){
+    add_ms(user_char);
+
+    return *this;
+}
+
+Mstring& Mstring::operator+=(Mstring& user_mstring){
+    add_ms(user_mstring.main_buffer);
+
+    return *this;
+}
+
 std::ostream& operator<<(std::ostream &os, Mstring &mstring){
 
     for (int i = 0; i < mstring.size(); i++) {
@@ -183,4 +195,13 @@ std::ostream& operator<<(std::ostream &os, Mstring &mstring){
     }
 
     return os;
+}
+
+std::istream& operator>>(std::istream &is, Mstring &mstring){
+    char *user_input = new char[1024];
+    std::cin >> user_input;
+
+    mstring.add_ms(user_input);
+
+    return is;
 }
