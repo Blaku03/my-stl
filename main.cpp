@@ -1,12 +1,15 @@
 #include <iostream>
-#include "mstl.h"
+#include "mstl.hxx"
+
+using namespace mstl;
 
 int main()
 {
-
-    Mvector<int> x;
-    x.push_back(1);
-    std::cout << x[0];
+    Mstring test("Hello");
+    Mstring test2;
+    test2 = "World";
+    test = test + " " + test2;
+    std::cout << test << std::endl;
 
     return 0;
 }

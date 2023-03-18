@@ -1,5 +1,6 @@
 #include "mstl.h"
 
+using namespace mstl;
 
 template<typename T>
 void Mvector<T>::expand_twice_the_size() {
@@ -45,7 +46,7 @@ Mvector<T>::~Mvector(){
 template<typename T>
 Mvector<T>& Mvector<T>::push_back(T user_value) {
     //Check if array isn't too small
-    if (current_size <= number_of_elements-1) expand_twice_the_size();
+    if (current_size <= number_of_elements) expand_twice_the_size();
 
     //Add user's value to array
     *(main_buffer + number_of_elements) = user_value;
@@ -91,12 +92,13 @@ T Mvector<T>::pop_front() {
     if(number_of_elements == 0) return 0;
 
     T *helper_buffer = new T[current_size];
-    T popped_element = main_buffer[--number_of_elements];
+    T popped_element = main_buffer[0];
 
     for (int i = 1; i < number_of_elements; i++) {
         *(helper_buffer + i - 1) = *(main_buffer + i);
     }
 
+    number_of_elements--;
     delete[] main_buffer;
     main_buffer = helper_buffer;
     return popped_element;
@@ -126,4 +128,59 @@ T Mvector<T>::operator[](size_t index) {
 template<typename T>
 size_t Mvector<T>::size() {
     return number_of_elements;
+}
+
+Mstring::Mstring(char user_char[]) : Mvector<char>() {
+    add_ms(user_char);
+}
+
+
+Mstring& Mstring::add_ms(char user_char[]) {
+    int element = 0;
+
+    while (user_char[element] != '\0') {
+        if (number_of_elements >= current_size) expand_twice_the_size();
+        *(main_buffer + number_of_elements) = user_char[element];
+        element++;
+        number_of_elements++;
+    }
+
+    return *this;
+}
+
+Mstring& Mstring::operator=(char user_char[]){
+    int element = 0;
+
+    while (user_char[element] != '\0') {
+        if (number_of_elements >= current_size) expand_twice_the_size();
+        *(main_buffer + element) = user_char[element];
+        element++;
+        number_of_elements++;
+    }
+
+    return *this;
+}
+
+Mstring& Mstring::operator+(char user_char[]){
+    add_ms(user_char);
+
+    return *this;
+}
+
+Mstring& Mstring::operator+(Mstring& user_mstring){
+    Mstring *new_mstring = new Mstring();
+
+    new_mstring->add_ms(main_buffer);
+    new_mstring->add_ms(user_mstring.main_buffer);
+
+    return *new_mstring;
+}
+
+std::ostream& operator<<(std::ostream &os, Mstring &mstring){
+
+    for (int i = 0; i < mstring.size(); i++) {
+        os << mstring.main_buffer[i];
+    }
+
+    return os;
 }
