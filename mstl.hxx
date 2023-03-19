@@ -126,6 +126,17 @@ T Mvector<T>::operator[](size_t index) {
 }
 
 template<typename T>
+Mvector<T>& Mvector<T>::operator=(const Mvector& user_vector) {
+    delete[] main_buffer;
+
+    main_buffer = copy_array(user_vector.main_buffer, user_vector.current_size, false);
+    number_of_elements = user_vector.number_of_elements;
+    current_size = user_vector.current_size;
+
+    return *this;
+}
+
+template<typename T>
 size_t Mvector<T>::size() {
     return number_of_elements;
 }
@@ -133,7 +144,6 @@ size_t Mvector<T>::size() {
 Mstring::Mstring(char user_char[]) : Mvector<char>() {
     add_ms(user_char);
 }
-
 
 Mstring& Mstring::add_ms(char user_char[]) {
     int element = 0;
@@ -144,6 +154,16 @@ Mstring& Mstring::add_ms(char user_char[]) {
         element++;
         number_of_elements++;
     }
+
+    return *this;
+}
+
+Mstring& Mstring::operator=(const Mstring& user_mstring){
+    delete[] main_buffer;
+
+    main_buffer = copy_array(user_mstring.main_buffer, user_mstring.current_size, false);
+    number_of_elements = user_mstring.number_of_elements;
+    current_size = user_mstring.current_size;
 
     return *this;
 }
@@ -203,5 +223,96 @@ std::istream& operator>>(std::istream &is, Mstring &mstring){
 
     mstring.add_ms(user_input);
 
+    delete [] user_input;
     return is;
+}
+
+template<typename T>
+LinkedList<T>::LinkedList(T init_data) {
+    previous = NULL;
+    next = NULL;
+    data = init_data;
+    number_of_elements = 1;
+}
+
+template<typename T>
+LinkedList<T>* LinkedList<T>::add_item(T input_data) {
+    LinkedList<T>* new_item = new LinkedList<T>(input_data);
+    new_item->previous = this;
+    this->next = new_item;
+    number_of_elements++;
+    return new_item;
+}
+
+template<typename T>
+T LinkedList<T>::print_index() {
+    return data;
+}
+
+template<typename T>
+LinkedList<T> *LinkedList<T>::get_first() {
+    LinkedList<T> *first_item = this;
+
+    while (first_item->previous != NULL) {
+        first_item = first_item->previous;
+    }
+
+    return first_item;
+}
+
+template<typename T>
+LinkedList<T> *LinkedList<T>::get_last() {
+    LinkedList<T> *last_item = this;
+
+    while (last_item->next != NULL) {
+        last_item = last_item->next;
+    }
+
+    return last_item;
+}
+
+template<typename T>
+LinkedList<T>* LinkedList<T>::get_position(size_t position) {
+    if (position >= number_of_elements) return NULL;
+    LinkedList<T>* item_to_return = get_first();
+
+    for (int i = 0; i < position; i++) {
+        item_to_return = item_to_return->next;
+    }
+
+    return item_to_return;
+}
+
+template<typename T>
+T LinkedList<T>::get_data() {
+    return data;
+}
+
+template<typename T>
+void LinkedList<T>::set_data(T new_data) {
+    data = new_data;
+}
+
+template<typename T>
+LinkedList<T>* LinkedList<T>::remove_item(size_t position) {
+    LinkedList<T>* item_to_remove = get_position(position);
+    LinkedList<T>* previous_item = item_to_remove->previous;
+    LinkedList<T>* next_item = item_to_remove->next;
+
+    previous_item->next = next_item;
+    next_item->previous = previous_item;
+
+    delete item_to_remove;
+    number_of_elements--;
+    return previous_item;
+}
+
+template<typename T>
+size_t LinkedList<T>::size() {
+    return number_of_elements;
+}
+
+template<typename T>
+LinkedList<T>* LinkedList<T>::operator[](size_t index) {
+    return get_position(index);
 }

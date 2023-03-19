@@ -5,11 +5,15 @@ using namespace mstl;
 
 int main()
 {
-    Mstring test;
-    std::cin >> test;
-    test += " ";
-    std::cin>>test;
-    std::cout << test << std::endl;
-
+    LinkedList<Mstring> test("HI");
+    Mstring jol = "JOL";
+    Mstring tak;
+    jol = tak;
+    std::cout<<jol;
+//    test.add_item("YOU");
+//    Mstring xd = "PR";
+//    std::cout<<xd;
+//    std::cout<<test.get_data()<<std::endl;
+//    std::cout<<test[1]->get_data()<<std::endl;
     return 0;
 }
