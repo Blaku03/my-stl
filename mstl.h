@@ -33,7 +33,7 @@ namespace mstl {
         T i_element(size_t index_of_element);
         T operator[](size_t index_of_element);
         Mvector& operator=(const Mvector& user_vector);
-        size_t size();
+        size_t size() const;
 
     };
 
@@ -42,6 +42,8 @@ namespace mstl {
         using Mvector::Mvector;
 
         Mstring(char user_mstring[]);
+        Mstring(const Mstring& user_mstring);
+        Mstring(Mstring&& user_mstring);
 
         Mstring& add_ms(char user_char[]);
 
@@ -62,15 +64,15 @@ namespace mstl {
 
     public:
         explicit LinkedList(T init_data);
-        LinkedList* add_item(T input_data);
+        LinkedList* add_item(const T& input_data);
         LinkedList* remove_item(size_t position);
         T print_index();
         LinkedList* get_last();
         LinkedList* get_first();
         LinkedList* get_position(size_t position);
-        T get_data();
+        const T& get_data();
         void set_data(T new_data);
-        size_t size();
+        size_t size() const;
         LinkedList<T>* operator[](size_t index);
     };
 }

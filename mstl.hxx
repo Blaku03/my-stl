@@ -39,8 +39,9 @@ Mvector<T>::Mvector() {
 
 template<typename T>
 Mvector<T>::~Mvector(){
-    if(main_buffer != nullptr)
+    if(main_buffer != nullptr){
         delete [] main_buffer;
+    }
 }
 
 template<typename T>
@@ -137,12 +138,26 @@ Mvector<T>& Mvector<T>::operator=(const Mvector& user_vector) {
 }
 
 template<typename T>
-size_t Mvector<T>::size() {
+size_t Mvector<T>::size() const {
     return number_of_elements;
 }
 
 Mstring::Mstring(char user_char[]) : Mvector<char>() {
     add_ms(user_char);
+}
+
+Mstring::Mstring(const Mstring& user_mstring) : Mvector<char>() {
+    main_buffer = copy_array(user_mstring.main_buffer, user_mstring.current_size, false);
+    number_of_elements = user_mstring.number_of_elements;
+    current_size = user_mstring.current_size;
+}
+
+Mstring::Mstring(Mstring&& user_mstring) : Mvector<char>() {
+    main_buffer = user_mstring.main_buffer;
+    user_mstring.main_buffer = nullptr;
+
+    number_of_elements = user_mstring.number_of_elements;
+    current_size = user_mstring.current_size;
 }
 
 Mstring& Mstring::add_ms(char user_char[]) {
@@ -178,6 +193,9 @@ Mstring& Mstring::operator=(char user_char[]){
         number_of_elements++;
     }
 
+    *(main_buffer + element) = '\0';
+    number_of_elements++;
+
     return *this;
 }
 
@@ -208,7 +226,7 @@ Mstring& Mstring::operator+=(Mstring& user_mstring){
     return *this;
 }
 
-std::ostream& operator<<(std::ostream &os, Mstring &mstring){
+std::ostream& operator<<(std::ostream &os, const Mstring &mstring){
 
     for (int i = 0; i < mstring.size(); i++) {
         os << mstring.main_buffer[i];
@@ -236,7 +254,7 @@ LinkedList<T>::LinkedList(T init_data) {
 }
 
 template<typename T>
-LinkedList<T>* LinkedList<T>::add_item(T input_data) {
+LinkedList<T>* LinkedList<T>::add_item(const T& input_data) {
     LinkedList<T>* new_item = new LinkedList<T>(input_data);
     new_item->previous = this;
     this->next = new_item;
@@ -284,7 +302,7 @@ LinkedList<T>* LinkedList<T>::get_position(size_t position) {
 }
 
 template<typename T>
-T LinkedList<T>::get_data() {
+const T& LinkedList<T>::get_data() {
     return data;
 }
 
@@ -308,7 +326,7 @@ LinkedList<T>* LinkedList<T>::remove_item(size_t position) {
 }
 
 template<typename T>
-size_t LinkedList<T>::size() {
+size_t LinkedList<T>::size() const {
     return number_of_elements;
 }
 
