@@ -20,8 +20,9 @@ namespace mstl {
 
         //Returning references to allow chained calls
         Mvector &push_back(T user_value);
-        Mvector &push_back(T user_arr[], size_t size_of_user_arr);
-        Mvector &push_back(Mvector &user_vector);
+        Mvector &push_back(T* user_arr, size_t size_of_user_arr);
+        Mvector &push_back(const Mvector &user_vector);
+        Mvector &push_back(Mvector&& user_vector);
 
         T pop();
         T pop_front();
@@ -32,6 +33,8 @@ namespace mstl {
         //Returns the value of i element of main buffer
         T i_element(size_t index_of_element);
         T operator[](size_t index_of_element);
+        T i_element(size_t index_of_element) const;
+        T operator[](size_t index_of_element) const;
         Mvector& operator=(const Mvector& user_vector);
         size_t size() const;
 
@@ -41,18 +44,21 @@ namespace mstl {
     public:
         using Mvector::Mvector;
 
-        explicit Mstring(char user_mstring[]);
+        Mstring(const char* user_mstring);
+        Mstring(char user_string[]);
         Mstring(const Mstring& user_mstring);
         Mstring(Mstring&& user_mstring) noexcept;
 
-        Mstring& add_ms(char user_char[]);
+        Mstring& add_ms(const char* user_char);
 
         Mstring& operator=(const Mstring& user_mstring);
-        Mstring& operator=(char user_char[]);
-        Mstring& operator+(char user_char[]);
-        Mstring& operator+(Mstring& user_mstring);
-        Mstring& operator+=(Mstring& user_mstring);
-        Mstring& operator+=(char user_char[]);
+        Mstring& operator=(const char* user_char);
+        Mstring& operator=(Mstring&& user_mstring) noexcept;
+
+        Mstring& operator+(const char* user_char);
+        Mstring& operator+(const Mstring& user_mstring);
+        Mstring& operator+=(const Mstring& user_mstring);
+        Mstring& operator+=(const char* user_char);
     };
 
     template <typename T>
@@ -65,6 +71,8 @@ namespace mstl {
     public:
         explicit LinkedList(T init_data);
         LinkedList* add_item(const T& input_data);
+        LinkedList* add_item(T&& input_data);
+
         LinkedList* remove_item(size_t position);
         T print_index();
         LinkedList* get_last();

@@ -68,7 +68,22 @@ Mvector<T>& Mvector<T>::push_back(T *user_arr, size_t size_of_user_arr) {
 }
 
 template<typename T>
-Mvector<T>& Mvector<T>::push_back(Mvector<T> &user_vector) {
+Mvector<T>& Mvector<T>::push_back(const Mvector<T> &user_vector) {
+    //Add it to variable to not call method all the time
+    size_t user_vector_size = user_vector.size();
+
+    while (!enough_buffer_space(user_vector_size)) expand_twice_the_size();
+
+    for (int i = 0; i < user_vector_size; i++) {
+        *(main_buffer + number_of_elements) = user_vector.i_element(i);
+        number_of_elements++;
+    }
+
+    return *this;
+}
+
+template<typename T>
+Mvector<T>& Mvector<T>::push_back(Mvector<T>&& user_vector) {
     //Add it to variable to not call method all the time
     size_t user_vector_size = user_vector.size();
 
@@ -127,6 +142,18 @@ T Mvector<T>::operator[](size_t index) {
 }
 
 template<typename T>
+T Mvector<T>::i_element(size_t index) const {
+    if (index < number_of_elements) return main_buffer[index];
+    std::cout << "ERROR: INDEX GIVEN IS NOT WITHIN THE VECTOR\n";
+    exit(99);
+}
+
+template<typename T>
+T Mvector<T>::operator[](size_t index) const {
+   return i_element(index);
+}
+
+template<typename T>
 Mvector<T>& Mvector<T>::operator=(const Mvector& user_vector) {
     delete[] main_buffer;
 
@@ -140,6 +167,10 @@ Mvector<T>& Mvector<T>::operator=(const Mvector& user_vector) {
 template<typename T>
 size_t Mvector<T>::size() const {
     return number_of_elements;
+}
+
+Mstring::Mstring(const char* user_char) : Mvector<char>() {
+    add_ms(user_char);
 }
 
 Mstring::Mstring(char user_char[]) : Mvector<char>() {
@@ -160,7 +191,7 @@ Mstring::Mstring(Mstring&& user_mstring) noexcept : Mvector<char>() {
     current_size = user_mstring.current_size;
 }
 
-Mstring& Mstring::add_ms(char user_char[]) {
+Mstring& Mstring::add_ms(const char* user_char) {
     int element = 0;
 
     while (user_char[element] != '\0') {
@@ -183,7 +214,7 @@ Mstring& Mstring::operator=(const Mstring& user_mstring){
     return *this;
 }
 
-Mstring& Mstring::operator=(char user_char[]){
+Mstring& Mstring::operator=(const char* user_char){
     int element = 0;
 
     while (user_char[element] != '\0') {
@@ -199,13 +230,27 @@ Mstring& Mstring::operator=(char user_char[]){
     return *this;
 }
 
-Mstring& Mstring::operator+(char user_char[]){
+Mstring& Mstring::operator=(Mstring&& user_mstring) noexcept{
+    delete[] main_buffer;
+
+    main_buffer = user_mstring.main_buffer;
+    number_of_elements = user_mstring.number_of_elements;
+    current_size = user_mstring.current_size;
+
+    user_mstring.main_buffer = nullptr;
+    user_mstring.number_of_elements = 0;
+    user_mstring.current_size = 0;
+
+    return *this;
+}
+
+Mstring& Mstring::operator+(const char* user_char){
     add_ms(user_char);
 
     return *this;
 }
 
-Mstring& Mstring::operator+(Mstring& user_mstring){
+Mstring& Mstring::operator+(const Mstring& user_mstring){
     Mstring *new_mstring = new Mstring();
 
     new_mstring->add_ms(main_buffer);
@@ -214,13 +259,13 @@ Mstring& Mstring::operator+(Mstring& user_mstring){
     return *new_mstring;
 }
 
-Mstring& Mstring::operator+=(char user_char[]){
+Mstring& Mstring::operator+=(const char* user_char){
     add_ms(user_char);
 
     return *this;
 }
 
-Mstring& Mstring::operator+=(Mstring& user_mstring){
+Mstring& Mstring::operator+=(const Mstring& user_mstring){
     add_ms(user_mstring.main_buffer);
 
     return *this;
@@ -252,6 +297,16 @@ LinkedList<T>::LinkedList(T init_data) {
     data = init_data;
     number_of_elements = 1;
 }
+
+template<typename T>
+LinkedList<T>* LinkedList<T>::add_item(T&& input_data) {
+    LinkedList<T>* new_item = new LinkedList<T>(input_data);
+    new_item->previous = this;
+    this->next = new_item;
+    number_of_elements++;
+    return new_item;
+}
+
 
 template<typename T>
 LinkedList<T>* LinkedList<T>::add_item(const T& input_data) {
