@@ -152,7 +152,7 @@ Mstring::Mstring(const Mstring& user_mstring) : Mvector<char>() {
     current_size = user_mstring.current_size;
 }
 
-Mstring::Mstring(Mstring&& user_mstring) : Mvector<char>() {
+Mstring::Mstring(Mstring&& user_mstring) noexcept : Mvector<char>() {
     main_buffer = user_mstring.main_buffer;
     user_mstring.main_buffer = nullptr;
 

@@ -41,9 +41,9 @@ namespace mstl {
     public:
         using Mvector::Mvector;
 
-        Mstring(char user_mstring[]);
+        explicit Mstring(char user_mstring[]);
         Mstring(const Mstring& user_mstring);
-        Mstring(Mstring&& user_mstring);
+        Mstring(Mstring&& user_mstring) noexcept;
 
         Mstring& add_ms(char user_char[]);
 
