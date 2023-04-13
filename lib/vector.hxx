@@ -1,9 +1,8 @@
+#pragma once
 #include "vector.h"
 
-using namespace my_stl;
-
 template<typename T>
-void vector<T>::expand_twice_the_size() {
+void my_stl::vector<T>::expand_twice_the_size() {
     T *helper_buffer = copy_array(main_buffer, current_size, false);
     delete[] main_buffer;
 
@@ -15,7 +14,7 @@ void vector<T>::expand_twice_the_size() {
 }
 
 template<typename T>
-T* vector<T>::copy_array(T *pointer_to_array_that_should_be_copied, size_t size_of_array, bool double_size) {
+T* my_stl::vector<T>::copy_array(T *pointer_to_array_that_should_be_copied, size_t size_of_array, bool double_size) {
     T *copied_array = new T[double_size ? size_of_array * 2 : size_of_array];
 
     for (unsigned int i = 0; i < size_of_array; i++) {
@@ -26,19 +25,19 @@ T* vector<T>::copy_array(T *pointer_to_array_that_should_be_copied, size_t size_
 }
 
 template<typename T>
-bool vector<T>::enough_buffer_space(size_t space_to_add) const {
+bool my_stl::vector<T>::enough_buffer_space(size_t space_to_add) const {
     return space_to_add + number_of_elements < current_size;
 }
 
 template<typename T>
-vector<T>::vector() {
+my_stl::vector<T>::vector() {
     current_size = 11;
     main_buffer = new T[current_size];
     number_of_elements = 0;
 }
 
 template<typename T>
-vector<T>::vector(const vector<T>& user_vector) {
+my_stl::vector<T>::vector(const vector<T>& user_vector) {
     if(main_buffer != nullptr)  delete[] main_buffer;
 
     main_buffer = copy_array(user_vector.main_buffer, user_vector.current_size, false);
@@ -47,7 +46,7 @@ vector<T>::vector(const vector<T>& user_vector) {
 }
 
 template<typename T>
-vector<T>::vector(vector<T>&& user_vector) noexcept {
+my_stl::vector<T>::vector(vector<T>&& user_vector) noexcept {
     main_buffer = user_vector.main_buffer;
     user_vector.main_buffer = nullptr;
     number_of_elements = user_vector.number_of_elements;
@@ -55,14 +54,14 @@ vector<T>::vector(vector<T>&& user_vector) noexcept {
 }
 
 template<typename T>
-vector<T>::~vector(){
+my_stl::vector<T>::~vector(){
     if(main_buffer != nullptr){
         delete [] main_buffer;
     }
 }
 
 template<typename T>
-vector<T>& vector<T>::push_back(const T& user_value) {
+my_stl::vector<T>& my_stl::vector<T>::push_back(const T& user_value) {
     //Check if array isn't too small
     if (current_size <= number_of_elements) expand_twice_the_size();
 
@@ -73,7 +72,7 @@ vector<T>& vector<T>::push_back(const T& user_value) {
 }
 
 template<typename T>
-vector<T>& vector<T>::push_back(const T *user_arr, size_t size_of_user_arr) {
+my_stl::vector<T>& my_stl::vector<T>::push_back(const T *user_arr, size_t size_of_user_arr) {
     while (!enough_buffer_space(size_of_user_arr)) expand_twice_the_size();
 
     for (int i = 0; i < size_of_user_arr; i++) {
@@ -85,7 +84,7 @@ vector<T>& vector<T>::push_back(const T *user_arr, size_t size_of_user_arr) {
 }
 
 template<typename T>
-vector<T>& vector<T>::push_back(const vector<T> &user_vector) {
+my_stl::vector<T>& my_stl::vector<T>::push_back(const vector<T> &user_vector) {
     //Add it to variable to not call method all the time
     size_t user_vector_size = user_vector.size();
 
@@ -100,7 +99,7 @@ vector<T>& vector<T>::push_back(const vector<T> &user_vector) {
 }
 
 template<typename T>
-vector<T>& vector<T>::push_back(vector<T>&& user_vector) {
+my_stl::vector<T>& my_stl::vector<T>::push_back(vector<T>&& user_vector) {
     //Add it to variable to not call method all the time
     size_t user_vector_size = user_vector.size();
 
@@ -115,12 +114,12 @@ vector<T>& vector<T>::push_back(vector<T>&& user_vector) {
 }
 
 template<typename T>
-void vector<T>::pop() {
+void my_stl::vector<T>::pop() {
     if (number_of_elements > 0) number_of_elements--;
 }
 
 template<typename T>
-void vector<T>::pop_index(size_t index_of_element){
+void my_stl::vector<T>::pop_index(size_t index_of_element){
 
     if (index_of_element < number_of_elements) {
         T *helper_buffer = new T[current_size];
@@ -141,7 +140,7 @@ void vector<T>::pop_index(size_t index_of_element){
 }
 
 template<typename T>
-void vector<T>::pop_front() {
+void my_stl::vector<T>::pop_front() {
     if(number_of_elements == 0) return;
 
     T *helper_buffer = new T[current_size];
@@ -157,7 +156,7 @@ void vector<T>::pop_front() {
 }
 
 template<typename T>
-void vector<T>::shrink_to_fit() {
+void my_stl::vector<T>::shrink_to_fit() {
     T *helper_buffer = copy_array(main_buffer, number_of_elements, false);
     delete[] main_buffer;
 
@@ -167,7 +166,7 @@ void vector<T>::shrink_to_fit() {
 }
 
 template<typename T>
-void vector<T>::clear() {
+void my_stl::vector<T>::clear() {
     delete[] main_buffer;
     current_size = 11;
     main_buffer = new T[current_size];
@@ -175,31 +174,31 @@ void vector<T>::clear() {
 }
 
 template<typename T>
-T& vector<T>::i_element(size_t index) {
+T& my_stl::vector<T>::i_element(size_t index) {
     if (index < number_of_elements) return main_buffer[index];
     std::cout << "ERROR: INDEX GIVEN IS NOT WITHIN THE VECTOR\n";
     exit(99);
 }
 
 template<typename T>
-T& vector<T>::operator[](size_t index) {
+T& my_stl::vector<T>::operator[](size_t index) {
     return i_element(index);
 }
 
 template<typename T>
-const T& vector<T>::i_element(size_t index) const {
+const T& my_stl::vector<T>::i_element(size_t index) const {
     if (index < number_of_elements) return main_buffer[index];
     std::cout << "ERROR: INDEX GIVEN IS NOT WITHIN THE VECTOR\n";
     exit(99);
 }
 
 template<typename T>
-const T& vector<T>::operator[](size_t index) const {
+const T& my_stl::vector<T>::operator[](size_t index) const {
     return i_element(index);
 }
 
 template<typename T>
-vector<T>& vector<T>::operator=(const vector& user_vector) {
+my_stl::vector<T>& my_stl::vector<T>::operator=(const vector& user_vector) {
     //handle self-assigment
     if (this == &user_vector) return *this;
 
@@ -212,7 +211,7 @@ vector<T>& vector<T>::operator=(const vector& user_vector) {
     return *this;
 }
 template<typename T>
-vector<T>& vector<T>::operator=(vector&& user_vector) noexcept{
+my_stl::vector<T>& my_stl::vector<T>::operator=(vector&& user_vector) noexcept{
     if(main_buffer != nullptr) delete [] main_buffer;
 
     main_buffer = user_vector.main_buffer;
@@ -224,28 +223,28 @@ vector<T>& vector<T>::operator=(vector&& user_vector) noexcept{
 }
 
 template<typename T>
-vector<T>& vector<T>::operator+(const vector& user_vector){
+my_stl::vector<T>& my_stl::vector<T>::operator+(const vector& user_vector){
     this->push_back(user_vector);
 
     return *this;
 }
 
 template<typename T>
-vector<T>& vector<T>::operator+(vector&& user_vector){
+my_stl::vector<T>& my_stl::vector<T>::operator+(vector&& user_vector){
     this->push_back(std::move(user_vector));
 
     return *this;
 }
 
 template<typename T>
-vector<T>& vector<T>::operator+=(const vector& user_vector){
+my_stl::vector<T>& my_stl::vector<T>::operator+=(const vector& user_vector){
     this->push_back(user_vector);
 
     return *this;
 }
 
 template<typename T>
-vector<T>& vector<T>::operator+=(vector&& user_vector){
+my_stl::vector<T>& my_stl::vector<T>::operator+=(vector&& user_vector){
     this->push_back(std::move(user_vector));
 
     return *this;
@@ -253,7 +252,7 @@ vector<T>& vector<T>::operator+=(vector&& user_vector){
 
 
 template<typename T>
-bool vector<T>::operator==(const vector& vector_to_compare){
+bool my_stl::vector<T>::operator==(const vector& vector_to_compare){
     if(number_of_elements != vector_to_compare.number_of_elements) return false;
 
     for(int i = 0; i < number_of_elements; i++){
@@ -264,6 +263,6 @@ bool vector<T>::operator==(const vector& vector_to_compare){
 }
 
 template<typename T>
-size_t vector<T>::size() const {
+size_t my_stl::vector<T>::size() const {
     return number_of_elements;
 }

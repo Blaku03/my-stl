@@ -1,5 +1,4 @@
-#ifndef MY_STL_VECTOR_H
-#define MY_STL_VECTOR_H
+#pragma once
 #include <iostream>
 
 namespace my_stl {
@@ -20,7 +19,7 @@ namespace my_stl {
 
         vector();
         vector(const vector& user_vector);
-        vector(vector&& user_vector) noexcept ;
+        vector(vector&& user_vector) noexcept;
         ~vector();
 
         //Returning references to allow chained calls
@@ -58,6 +57,3 @@ namespace my_stl {
 
     };
 }
-
-
-#endif //MY_STL_VECTOR_H
