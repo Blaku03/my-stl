@@ -15,7 +15,7 @@ namespace my_stl {
         bool enough_buffer_space(size_t space_to_add) const;
 
     public:
-        T *main_buffer;
+        T *main_buffer = nullptr;
 
         vector();
         vector(const vector& user_vector);
