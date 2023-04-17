@@ -8,7 +8,7 @@ namespace my_stl{
         T1 first;
         T2 second;
 
-        pair();
+        pair() = default;
         ~pair() = default;
 
         pair(T1 value_first, T2 value_second);

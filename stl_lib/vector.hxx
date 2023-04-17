@@ -30,14 +30,7 @@ bool my_stl::vector<T>::enough_buffer_space(size_t space_to_add) const {
 }
 
 template<typename T>
-my_stl::vector<T>::vector() {
-    current_size = 11;
-    main_buffer = new T[current_size];
-    number_of_elements = 0;
-}
-
-template<typename T>
-my_stl::vector<T>::vector(const vector<T>& user_vector) {
+void my_stl::vector<T>::copy_vector(const vector &user_vector) {
     if(main_buffer)  delete[] main_buffer;
 
     main_buffer = copy_array(user_vector.main_buffer, user_vector.current_size, false);
@@ -46,11 +39,28 @@ my_stl::vector<T>::vector(const vector<T>& user_vector) {
 }
 
 template<typename T>
-my_stl::vector<T>::vector(vector<T>&& user_vector) noexcept {
+void my_stl::vector<T>::move_vector(vector &&user_vector) noexcept {
     main_buffer = user_vector.main_buffer;
     user_vector.main_buffer = nullptr;
     number_of_elements = user_vector.number_of_elements;
     current_size = user_vector.current_size;
+}
+
+template<typename T>
+my_stl::vector<T>::vector() {
+    current_size = 11;
+    main_buffer = new T[current_size];
+    number_of_elements = 0;
+}
+
+template<typename T>
+my_stl::vector<T>::vector(const vector<T>& user_vector) {
+    copy_vector(user_vector);
+}
+
+template<typename T>
+my_stl::vector<T>::vector(vector<T>&& user_vector) noexcept {
+    move_vector(std::move(user_vector));
 }
 
 template<typename T>
@@ -161,7 +171,6 @@ void my_stl::vector<T>::shrink_to_fit() {
     delete[] main_buffer;
 
     main_buffer = helper_buffer;
-    helper_buffer = nullptr;
     current_size = number_of_elements;
 }
 
@@ -199,25 +208,15 @@ const T& my_stl::vector<T>::operator[](size_t index) const {
 
 template<typename T>
 my_stl::vector<T>& my_stl::vector<T>::operator=(const vector& user_vector) {
-    //handle self-assigment
     if (this == &user_vector) return *this;
 
-    if(main_buffer) delete [] main_buffer;
-
-    main_buffer = copy_array(user_vector.main_buffer, user_vector.current_size, false);
-    number_of_elements = user_vector.number_of_elements;
-    current_size = user_vector.current_size;
+    copy_vector(user_vector);
 
     return *this;
 }
 template<typename T>
 my_stl::vector<T>& my_stl::vector<T>::operator=(vector&& user_vector) noexcept{
-    if(main_buffer) delete [] main_buffer;
-
-    main_buffer = user_vector.main_buffer;
-    user_vector.main_buffer = nullptr;
-    number_of_elements = user_vector.number_of_elements;
-    current_size = user_vector.current_size;
+    move_vector(std::move(user_vector));
 
     return *this;
 }

@@ -1,9 +1,6 @@
 #include "pair.h"
 
 template<typename T1, typename T2>
-my_stl::pair<T1,T2>::pair(){}
-
-template<typename T1, typename T2>
 my_stl::pair<T1,T2>::pair(T1 value_first, T2 value_second) : first(value_first), second(value_second) {}
 
 template<typename T1, typename T2>

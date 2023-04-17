@@ -5,14 +5,17 @@ namespace my_stl {
     template<typename T>
     class vector {
     protected:
-        size_t current_size;
-        size_t number_of_elements;
+        size_t current_size{};
+        size_t number_of_elements{};
 
         void expand_twice_the_size();
         T *copy_array(T *pointer_to_array_that_should_be_copied, size_t size_of_array, bool double_size);
 
         //Check if buffer have enough space to take "x" elements
-        bool enough_buffer_space(size_t space_to_add) const;
+        [[nodiscard]] bool enough_buffer_space(size_t space_to_add) const;
+
+        void copy_vector(const vector& user_vector);
+        void move_vector(vector&& user_vector) noexcept;
 
     public:
         T *main_buffer = nullptr;
@@ -53,7 +56,7 @@ namespace my_stl {
 
         bool operator==(const vector& vector_to_compare);
 
-        size_t size() const;
+        [[nodiscard]] size_t size() const;
 
     };
 }

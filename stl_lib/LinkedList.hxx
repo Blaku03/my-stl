@@ -1,7 +1,34 @@
 #include "LinkedList.h"
 
 template<typename T>
-T* my_stl::LinkedList<T>::operator[](size_t index) {
+void my_stl::LinkedList<T>::copyList(const LinkedList &user_list) {
+    Node<T> *current_node = user_list.first;
+
+    if(this->first != nullptr){
+        delete this->first;
+    }
+    first = nullptr;
+
+    while(current_node != nullptr){
+        this->push_back(current_node->data);
+        current_node = current_node->next;
+    }
+}
+
+template<typename T>
+void my_stl::LinkedList<T>::moveList(LinkedList &&user_list) noexcept {
+
+    this->first = user_list.first;
+    this->last = user_list.last;
+    this->number_of_nodes = user_list.number_of_nodes;
+
+    user_list.first = nullptr;
+    user_list.last = nullptr;
+    user_list.number_of_nodes = 0;
+}
+
+template<typename T>
+T* my_stl::LinkedList<T>::operator[](size_t index) const{
     if(first == nullptr) return nullptr;
 
     Node<T>* current_node = first;
@@ -76,49 +103,25 @@ void my_stl::LinkedList<T>::pop_index(size_t index) {
 
 template<typename T>
 my_stl::LinkedList<T>& my_stl::LinkedList<T>::operator=(const LinkedList &user_list) {
-    Node<T> *current_node = user_list.first;
-    while(current_node != nullptr){
-        this->push_back(current_node->data);
-        current_node = current_node->next;
-    }
-
+    if (this == &user_list) return *this;
+    copyList(user_list);
     return *this;
 }
 
 template<typename T>
 my_stl::LinkedList<T>& my_stl::LinkedList<T>::operator=(LinkedList &&user_list) noexcept {
-
-    this->first = user_list.first;
-    this->last = user_list.last;
-    this->number_of_nodes = user_list.number_of_nodes;
-
-    user_list.first = nullptr;
-    user_list.last = nullptr;
-    user_list.number_of_nodes = 0;
-
+    moveList(std::move(user_list));
     return *this;
 }
 
 template<typename T>
 my_stl::LinkedList<T>::LinkedList(const LinkedList &user_list) {
-    Node<T> *current_node = user_list.first;
-    while(current_node != nullptr){
-        this->push_back(current_node->data);
-        current_node = current_node->next;
-    }
-
+    copyList(user_list);
 }
 
 template<typename T>
 my_stl::LinkedList<T>::LinkedList(LinkedList &&user_list) noexcept {
-
-    this->first = user_list.first;
-    this->last = user_list.last;
-    this->number_of_nodes = user_list.number_of_nodes;
-
-    user_list.first = nullptr;
-    user_list.last = nullptr;
-    user_list.number_of_nodes = 0;
+    moveList(std::move(user_list));
 }
 
 template<typename T>

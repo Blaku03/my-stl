@@ -19,12 +19,15 @@ namespace my_stl{
 
     template<typename T>
     class LinkedList {
+    private:
+        void copyList(const LinkedList& user_list);
+        void moveList(LinkedList&& user_list) noexcept;
     public:
         Node<T>* first = nullptr;
         Node<T>* last = nullptr;
         size_t number_of_nodes = 0;
 
-        T* operator[](size_t index);
+        T* operator[](size_t index) const;
         void push_back(T item_data);
         void push_front(T item_data);
         void pop_index(size_t index);
@@ -39,6 +42,7 @@ namespace my_stl{
 
         ~LinkedList();
     };
+
 
 }
 
