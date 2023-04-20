@@ -6,9 +6,11 @@
 namespace my_stl {
     class vstring : public vector<char> {
     public:
-        using vector::vector;
+        using vector<char>::vector;
 
-        explicit vstring(const char *user_string);
+        vstring() = default;
+
+        vstring(const char *user_string);
 
         explicit vstring(char user_char[]);
 
@@ -26,7 +28,11 @@ namespace my_stl {
 
         vstring &operator+=(const char *user_char);
 
-        bool operator==(const vstring &user_vstring);
+        //importing all other operators from vector
+        using vector<char>::operator=;
+        using vector<char>::operator+;
+        using vector<char>::operator+=;
+        using vector<char>::operator==;
 
         friend std::istream &operator>>(std::istream &is, vstring &vstring);
 

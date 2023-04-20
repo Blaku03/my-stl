@@ -73,17 +73,6 @@ my_stl::vstring &my_stl::vstring::operator+=(const char *user_char) {
     return *this;
 }
 
-bool my_stl::vstring::operator==(const vstring &user_vstring) {
-    if (number_of_elements != user_vstring.number_of_elements) return false;
-
-    for (int i = 0; i < number_of_elements; i++) {
-        if (main_buffer[i] != user_vstring[i]) return false;
-    }
-
-    return true;
-
-}
-
 namespace my_stl {
     std::istream &operator>>(std::istream &is, my_stl::vstring &vstring) {
         char user_input[1024];
