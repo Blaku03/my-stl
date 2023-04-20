@@ -1,7 +1,7 @@
 #ifndef MY_STL_PAIR_H
 #define MY_STL_PAIR_H
 
-namespace my_stl{
+namespace my_stl {
     template<typename T1, typename T2>
     class pair {
     public:
@@ -9,16 +9,20 @@ namespace my_stl{
         T2 second;
 
         pair() = default;
+
         ~pair() = default;
 
         pair(T1 value_first, T2 value_second);
-        pair(const pair& user_pair);
-        pair(pair&& pair_move) noexcept;
 
-        bool operator==(const pair& pair_compare) const;
+        pair(const pair &user_pair);
 
-        pair& operator=(const pair& pair_copy);
-        pair& operator=(pair&& pair_move) noexcept;
+        pair(pair &&pair_move) noexcept;
+
+        bool operator==(const pair &pair_compare) const;
+
+        pair &operator=(const pair &pair_copy);
+
+        pair &operator=(pair &&pair_move) noexcept;
     };
 }
 
