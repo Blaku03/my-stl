@@ -4,14 +4,9 @@
 
 template<typename T>
 void my_stl::vector<T>::expand_twice_the_size() {
-    T *helper_buffer = copy_array(main_buffer, current_size, false);
-    delete[] main_buffer;
-
     //Doubling the size of main buffer
-    main_buffer = copy_array(helper_buffer, current_size, true);
+    main_buffer = copy_array(main_buffer, current_size, true);
     current_size *= 2;
-
-    delete[] helper_buffer;
 }
 
 template<typename T>
