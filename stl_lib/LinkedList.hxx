@@ -87,6 +87,12 @@ void my_stl::LinkedList<T>::pop_index(size_t index) {
     }
 
     if (current_node == first) {
+        if (number_of_nodes == 1) {
+            first = nullptr;
+            delete current_node;
+            number_of_nodes--;
+            return;
+        }
         first = current_node->next;
         first->previous = nullptr;
     } else if (current_node == last) {
