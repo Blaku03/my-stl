@@ -25,6 +25,8 @@ namespace my_stl {
 
         vector();
 
+        explicit vector(size_t size_of_vector);
+
         vector(const vector &user_vector);
 
         vector(vector &&user_vector) noexcept;
@@ -52,11 +54,11 @@ namespace my_stl {
         void clear();
 
         //Returns the value of i element of main buffer
-        T &i_element(size_t index);
+        T &i_element(size_t index, bool safe_mode = false);
 
         T &operator[](size_t index);
 
-        const T &i_element(size_t index) const;
+        const T &i_element(size_t index, bool safe_mode = false) const;
 
         const T &operator[](size_t index) const;
 

@@ -1,5 +1,4 @@
-#ifndef MY_STL_LINKEDLIST_H
-#define MY_STL_LINKEDLIST_H
+#pragma once
 
 #include <iostream>
 
@@ -51,7 +50,4 @@ namespace my_stl {
         ~LinkedList();
     };
 
-
 }
-
-#endif //MY_STL_LINKEDLIST_H

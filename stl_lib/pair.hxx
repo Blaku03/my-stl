@@ -1,3 +1,5 @@
+#pragma once
+
 #include "pair.h"
 
 template<typename T1, typename T2>

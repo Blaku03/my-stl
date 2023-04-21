@@ -50,6 +50,12 @@ my_stl::vector<T>::vector() {
 }
 
 template<typename T>
+my_stl::vector<T>::vector(size_t size_of_vector) : current_size(size_of_vector) {
+    main_buffer = new T[current_size];
+    number_of_elements = 0;
+}
+
+template<typename T>
 my_stl::vector<T>::vector(const vector<T> &user_vector) {
     copy_vector(user_vector);
 }
@@ -179,8 +185,8 @@ void my_stl::vector<T>::clear() {
 }
 
 template<typename T>
-T &my_stl::vector<T>::i_element(size_t index) {
-    if (index < number_of_elements) return main_buffer[index];
+T &my_stl::vector<T>::i_element(size_t index, bool safe_mode) {
+    if (index < number_of_elements || safe_mode) return main_buffer[index];
     std::cout << "ERROR: INDEX GIVEN IS NOT WITHIN THE VECTOR\n";
     exit(99);
 }
@@ -191,8 +197,8 @@ T &my_stl::vector<T>::operator[](size_t index) {
 }
 
 template<typename T>
-const T &my_stl::vector<T>::i_element(size_t index) const {
-    if (index < number_of_elements) return main_buffer[index];
+const T &my_stl::vector<T>::i_element(size_t index, bool safe_mode) const {
+    if (index < number_of_elements || safe_mode) return main_buffer[index];
     std::cout << "ERROR: INDEX GIVEN IS NOT WITHIN THE VECTOR\n";
     exit(99);
 }
