@@ -7,7 +7,7 @@ using my_stl::vector;
 
 //default compare function
 template<typename T, typename functionCompare = std::greater<T>>
-class PriorityQueue {
+class priorityQueue {
 private:
     vector<T> heap;
     functionCompare compare;
@@ -25,9 +25,9 @@ private:
     int rightChild(int index);
 
 public:
-    explicit PriorityQueue(functionCompare compare) : compare(compare) {}
+    explicit priorityQueue(functionCompare compare) : compare(compare) {}
 
-    PriorityQueue() = default;
+    priorityQueue() = default;
 
     void push(const T &value);
 

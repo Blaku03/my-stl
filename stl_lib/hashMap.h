@@ -1,12 +1,12 @@
 #ifndef MY_STL_HASHMAP_H
 #define MY_STL_HASHMAP_H
 
-#include "LinkedList.hxx"
+#include "linkedList.hxx"
 #include "vstring.h"
 #include "vector.hxx"
 #include "pair.hxx"
 
-using my_stl::LinkedList;
+using my_stl::linkedList;
 using my_stl::vstring;
 using my_stl::vector;
 using my_stl::pair;
@@ -15,7 +15,7 @@ class hashMap {
 
     int sizeOfTable = 1'000'000'0;
     unsigned int numberOfElements = 0;
-    vector<LinkedList<pair<vstring, int>>> mainTable;
+    vector<linkedList<pair<vstring, int>>> mainTable;
 
 public:
 

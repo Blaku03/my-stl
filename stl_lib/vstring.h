@@ -22,7 +22,7 @@ namespace my_stl {
 
         vstring &operator=(const char *user_char);
 
-        bool operator==(const char *user_char);
+        bool operator==(const char *user_char) const;
 
         vstring &operator+(const char *user_char);
 

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "PriorityQueue.h"
+#include "priorityQueue.h"
 
 template<typename T, typename functionCompare>
-void PriorityQueue<T, functionCompare>::swap(T &a, T &b) {
+void priorityQueue<T, functionCompare>::swap(T &a, T &b) {
 
     T temp = a;
     a = b;
@@ -11,32 +11,32 @@ void PriorityQueue<T, functionCompare>::swap(T &a, T &b) {
 }
 
 template<typename T, typename functionCompare>
-bool PriorityQueue<T, functionCompare>::empty() {
+bool priorityQueue<T, functionCompare>::empty() {
     return heap.size() == 0;
 }
 
 template<typename T, typename functionCompare>
-int PriorityQueue<T, functionCompare>::size() const {
+int priorityQueue<T, functionCompare>::size() const {
     return heap.size();
 }
 
 template<typename T, typename functionCompare>
-int PriorityQueue<T, functionCompare>::rightChild(int index) {
+int priorityQueue<T, functionCompare>::rightChild(int index) {
     return 2 * index + 2;
 }
 
 template<typename T, typename functionCompare>
-int PriorityQueue<T, functionCompare>::leftChild(int index) {
+int priorityQueue<T, functionCompare>::leftChild(int index) {
     return 2 * index + 1;
 }
 
 template<typename T, typename functionCompare>
-int PriorityQueue<T, functionCompare>::parent(int index) {
+int priorityQueue<T, functionCompare>::parent(int index) {
     return (index - 1) / 2;
 }
 
 template<typename T, typename functionCompare>
-void PriorityQueue<T, functionCompare>::heapifyUp(int index) {
+void priorityQueue<T, functionCompare>::heapifyUp(int index) {
 
     while (index > 0 && compare(heap[index], heap[parent(index)])) {
         swap(heap[index], heap[parent(index)]);
@@ -45,7 +45,7 @@ void PriorityQueue<T, functionCompare>::heapifyUp(int index) {
 }
 
 template<typename T, typename functionCompare>
-void PriorityQueue<T, functionCompare>::heapifyDown(int index) {
+void priorityQueue<T, functionCompare>::heapifyDown(int index) {
     int child = leftChild(index);
 
     while (child < heap.size()) {
@@ -62,19 +62,19 @@ void PriorityQueue<T, functionCompare>::heapifyDown(int index) {
 }
 
 template<typename T, typename functionCompare>
-const T &PriorityQueue<T, functionCompare>::top() {
+const T &priorityQueue<T, functionCompare>::top() {
     return heap[0];
 }
 
 template<typename T, typename functionCompare>
-void PriorityQueue<T, functionCompare>::pop() {
+void priorityQueue<T, functionCompare>::pop() {
     swap(heap[0], heap[heap.size() - 1]);
     heap.pop();
     heapifyDown(0);
 }
 
 template<typename T, typename functionCompare>
-void PriorityQueue<T, functionCompare>::push(const T &value) {
+void priorityQueue<T, functionCompare>::push(const T &value) {
     heap.push_back(value);
     heapifyUp(heap.size() - 1);
 }

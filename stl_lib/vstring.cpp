@@ -20,7 +20,6 @@ my_stl::vstring &my_stl::vstring::add_ms(const char *user_char) {
     }
 
     *(main_buffer + number_of_elements) = '\0';
-    number_of_elements++;
 
     return *this;
 }
@@ -48,7 +47,7 @@ my_stl::vstring &my_stl::vstring::operator=(const char *user_char) {
 }
 
 
-bool my_stl::vstring::operator==(const char *user_char) {
+bool my_stl::vstring::operator==(const char *user_char) const {
     int element = 0;
 
     while (user_char[element] != '\0') {
@@ -77,6 +76,7 @@ namespace my_stl {
     std::istream &operator>>(std::istream &is, my_stl::vstring &vstring) {
         char user_input[1024];
         std::cin >> user_input;
+        vstring.clear();
 
         vstring.add_ms(user_input);
 
