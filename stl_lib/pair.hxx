@@ -12,6 +12,11 @@ template<typename T1, typename T2>
 my_stl::pair<T1, T2>::pair(pair<T1, T2> &&pair_copy) noexcept : first(pair_copy.first), second(pair_copy.second) {}
 
 template<typename T1, typename T2>
+my_stl::pair<T1, T2> &my_stl::pair<T1, T2>::make_pair(T1 first, T2 second) {
+    return pair(first, second);
+}
+
+template<typename T1, typename T2>
 bool my_stl::pair<T1, T2>::operator==(const pair<T1, T2> &pair_compare) const {
     return (pair_compare.first == first && pair_compare.second == second);
 }

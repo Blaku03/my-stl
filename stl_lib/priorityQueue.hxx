@@ -11,7 +11,7 @@ void priorityQueue<T, functionCompare>::swap(T &a, T &b) {
 }
 
 template<typename T, typename functionCompare>
-bool priorityQueue<T, functionCompare>::empty() {
+bool priorityQueue<T, functionCompare>::empty() const {
     return heap.size() == 0;
 }
 

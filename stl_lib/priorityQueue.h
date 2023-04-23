@@ -25,7 +25,7 @@ private:
     int rightChild(int index);
 
 public:
-    explicit priorityQueue(functionCompare compare) : compare(compare) {}
+    priorityQueue(functionCompare compare) : compare(compare) {}
 
     priorityQueue() = default;
 
@@ -35,7 +35,7 @@ public:
 
     const T &top();
 
-    bool empty();
+    [[nodiscard]] bool empty() const;
 
     [[nodiscard]] int size() const;
 

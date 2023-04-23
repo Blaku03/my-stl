@@ -18,12 +18,16 @@ namespace my_stl {
 
         pair(pair &&pair_move) noexcept;
 
+        pair<T1, T2> &make_pair(T1 first, T2 second);
+
         bool operator==(const pair &pair_compare) const;
 
         pair &operator=(const pair &pair_copy);
 
         pair &operator=(pair &&pair_move) noexcept;
     };
+
+
 }
 
 #endif //MY_STL_PAIR_H
