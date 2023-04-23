@@ -11,19 +11,19 @@ using my_stl::vstring;
 using my_stl::vector;
 using my_stl::pair;
 
-class HashMap {
+class hashMap {
 
-    int sizeOfTable = 10000000;
-    int numberOfElements = 0;
-    vector<LinkedList<pair<vstring, int>>> main_table;
+    int sizeOfTable = 1'000'000'0;
+    unsigned int numberOfElements = 0;
+    vector<LinkedList<pair<vstring, int>>> mainTable;
 
 public:
 
-    HashMap() : main_table(sizeOfTable) {}
+    hashMap() : mainTable(sizeOfTable) {}
 
-    ~HashMap() = default;
+    ~hashMap() = default;
 
-    [[nodiscard]] int hash(vstring key) const;
+    [[nodiscard]] unsigned int hash(vstring key) const;
 
     void insert(const vstring &key, int value);
 
@@ -33,7 +33,7 @@ public:
 
     bool contains(const vstring &key);
 
-    [[nodiscard]] int size() const;
+    [[nodiscard]] unsigned int size() const;
 };
 
 
